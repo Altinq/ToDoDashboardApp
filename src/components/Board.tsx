@@ -1,13 +1,81 @@
-import CardWrapper from "./CardWrapper";
+import { useState } from "react";
+import type { Task, Column as ColumnType } from "../utils/types.ts";
+import { DndContext, type DragEndEvent } from "@dnd-kit/core";
+import Column from "./Column.tsx";
+
+const COLUMNS: ColumnType[] = [
+  { id: "TODO", title: "To Do" },
+  { id: "IN_PROGRESS", title: "In Progress" },
+  { id: "DONE", title: "Done" },
+];
+
+const INITIAL_TASKS: Task[] = [
+  {
+    id: "1",
+    title: "Research Project",
+    description: "Gather requirements and create initial documentation",
+    status: "TODO",
+    priority: "High",
+  },
+  {
+    id: "2",
+    title: "Design System",
+    description: "Create component library and design tokens",
+    status: "TODO",
+    priority: "Medium",
+  },
+  {
+    id: "3",
+    title: "API Integration",
+    description: "Implement REST API endpoints",
+    status: "IN_PROGRESS",
+    priority: "Low",
+  },
+  {
+    id: "4",
+    title: "Testing",
+    description: "Write unit tests for core functionality",
+    status: "DONE",
+    priority: "Low",
+  },
+];
 
 const Board = () => {
+  const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS);
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over) return;
+    const taskId = active.id as string;
+    const newStatus = over.id as Task["status"];
+
+    setTasks(() =>
+      tasks.map((task) =>
+        task.id === taskId
+          ? {
+              ...task,
+              status: newStatus,
+            }
+          : task
+      )
+    );
+  }
+
   return (
     <div className="w-full mt-28 mr-11">
       <h1 className="font-semibold text-3xl mb-9">Board</h1>
-      <div className="flex flex-row gap-8   ">
-        <CardWrapper title="To Do" />
-        <CardWrapper title="In Progress" />
-        <CardWrapper title="Done" />
+      <div className="flex flex-row gap-8 ">
+        <DndContext onDragEnd={handleDragEnd}>
+          {COLUMNS.map((column) => {
+            return (
+              <Column
+                key={column.id}
+                column={column}
+                tasks={tasks.filter((task) => task.status === column.id)}
+              />
+            );
+          })}
+        </DndContext>
       </div>
     </div>
   );
