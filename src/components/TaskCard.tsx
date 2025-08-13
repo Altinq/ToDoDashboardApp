@@ -3,9 +3,11 @@ import type { Task } from "../utils/types";
 
 type TaskCardProps = {
   task: Task;
+  onEdit: () => void;
+  onDelete: () => void;
 };
 
-const TaskCard = ({ task }: TaskCardProps) => {
+const TaskCard = ({ task, onDelete, onEdit }: TaskCardProps) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: task.id,
   });
@@ -27,14 +29,36 @@ const TaskCard = ({ task }: TaskCardProps) => {
   return (
     <div
       ref={setNodeRef}
-      {...listeners}
-      {...attributes}
-      className="cursor-grab gap-2 bg-white p-6 rounded-2xl  shadow-sm hover:shadow-md"
       style={style}
+      className="bg-white p-4 rounded-2xl shadow flex flex-col gap-2"
     >
-      <h3 className="font-bold text-xl">{task.title}</h3>
+      <div className="flex justify-between items-center">
+        <h3 className="font-bold">{task.title}</h3>
+        {/* Drag handle */}
+        <span
+          {...listeners}
+          {...attributes}
+          className="cursor-grab text-gray-400 hover:text-gray-600"
+        >
+          ⠿
+        </span>
+      </div>
       <p className=" text-sm ">{task.description}</p>
       <p className={`text-sm ${priorityClass}`}>{task.priority}</p>
+      <div className="flex gap-2 mt-2">
+        <button
+          onClick={onEdit}
+          className="text-blue-500 hover:text-blue-800 hover:cursor-pointer"
+        >
+          Edit
+        </button>
+        <button
+          onClick={onDelete}
+          className="text-red-500 hover:text-red-800 hover:cursor-pointer"
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 };

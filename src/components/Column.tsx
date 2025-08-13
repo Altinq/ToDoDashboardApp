@@ -5,22 +5,43 @@ import type { Column as ColumnType, Task } from "../utils/types";
 type ColumnProps = {
   column: ColumnType;
   tasks: Task[];
+  onAddClick: () => void;
+  onEditClick: (task: Task) => void;
+  onDeleteClick: (id: string) => void;
 };
 
-const Column = ({ column, tasks }: ColumnProps) => {
+const Column = ({
+  column,
+  tasks,
+  onAddClick,
+  onEditClick,
+  onDeleteClick,
+}: ColumnProps) => {
   const { setNodeRef } = useDroppable({
     id: column.id,
   });
 
   return (
-    <div className="flex w-1/3 flex-col p-6 bg-blue-50 rounded-2xl h-screen">
+    <div className="flex w-1/3 flex-col p-6 bg-gray-100 rounded-2xl h-screen">
       <div className="flex flex-row justify-between mb-9 items-center">
         <h2 className=" font-bold text-lg">{column.title}</h2>
-        <button className="text-3xl">+</button>
+        <button
+          onClick={onAddClick}
+          className="text-3xl hover:text-gray-500 cursor-pointer"
+        >
+          +
+        </button>
       </div>
       <div ref={setNodeRef} className="flex flex-1 flex-col gap-4">
         {tasks.map((task) => {
-          return <TaskCard key={task.id} task={task} />;
+          return (
+            <TaskCard
+              onDelete={() => onDeleteClick(task.id)}
+              onEdit={() => onEditClick(task)}
+              key={task.id}
+              task={task}
+            />
+          );
         })}
       </div>
     </div>
