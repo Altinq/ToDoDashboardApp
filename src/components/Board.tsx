@@ -53,7 +53,6 @@ const Board = () => {
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const modalRef = useRef<{ open: () => void; close: () => void }>(null);
 
-  // Save to localStorage whenever tasks change
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
@@ -80,6 +79,7 @@ const Board = () => {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       priority: formData.get("priority") as Task["priority"],
+      dueDate: (formData.get("dueDate") as string) || undefined,
       status: editingTask ? editingTask.status : currentColumn!,
     };
 
@@ -90,7 +90,7 @@ const Board = () => {
     } else {
       setTasks((prev) => [...prev, newTask]);
     }
-
+    e.currentTarget.reset();
     setEditingTask(null);
     modalRef.current?.close();
   }
@@ -151,6 +151,14 @@ const Board = () => {
             <option value="Medium">Medium</option>
             <option value="High">High</option>
           </select>
+
+          <input
+            type="date"
+            name="dueDate"
+            className="border p-2 rounded"
+            defaultValue={editingTask?.dueDate || ""}
+          />
+
           <button type="submit" className="bg-blue-500 text-white py-2 rounded">
             {editingTask ? "Save Changes" : "Add Task"}
           </button>

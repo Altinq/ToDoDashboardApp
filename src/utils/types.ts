@@ -5,7 +5,7 @@ export type Task = {
   status: TaskStatus;
   title: string;
   description?: string;
-  dueDate?: Date;
+  dueDate?: string;
   priority: "Low" | "Medium" | "High";
 };
 

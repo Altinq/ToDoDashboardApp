@@ -44,7 +44,13 @@ const TaskCard = ({ task, onDelete, onEdit }: TaskCardProps) => {
         </span>
       </div>
       <p className=" text-sm ">{task.description}</p>
-      <p className={`text-sm ${priorityClass}`}>{task.priority}</p>
+      <p className={`text-sm ${priorityClass}`}>Priority: {task.priority}</p>
+      {task.dueDate && (
+        <span className="text-xs text-gray-500">
+          Due: {new Date(task.dueDate).toLocaleDateString()}
+        </span>
+      )}
+
       <div className="flex gap-2 mt-2">
         <button
           onClick={onEdit}
