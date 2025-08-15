@@ -96,13 +96,19 @@ const Board = () => {
   }
 
   function handleDeleteTask(id: string) {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this task?"
+    );
+    if (!confirmed) return;
     setTasks((prev) => prev.filter((task) => task.id !== id));
   }
 
   return (
-    <div className="w-full mt-28 mr-11">
-      <h1 className="font-semibold text-3xl mb-9">Board</h1>
-      <div className="flex flex-row gap-8">
+    <div className="w-full lg:mt-28 mr-11">
+      <h1 className="font-semibold text-3xl mb-9 text-center w-full lg:text-left">
+        Board
+      </h1>
+      <div className="flex lg:flex-row flex-col gap-8 items-center ">
         <DndContext onDragEnd={handleDragEnd}>
           {COLUMNS.map((column) => (
             <Column

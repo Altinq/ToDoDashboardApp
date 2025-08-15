@@ -17,10 +17,10 @@ const Navbar = () => {
     "flex items-center gap-4 text-gray-500 hover:text-black hover:bg-slate-200 w-full";
 
   return (
-    <div className="p-11 shadow-2xl h-screen">
+    <div className="p-11 lg:shadow-2xl lg:h-screen ">
       <BurgerMenu navVisibility={navVisibility} toggleNav={toggleNav} />
       <nav className={navVisibility}>
-        <h1 className="font-bold text-lg flex items-center gap-4">
+        <h1 className="font-bold text-lg flex items-center gap-4 ">
           <img src={codesandboxImg} alt="Logo" className="w-6 h-6" />
           Pro Manage
         </h1>

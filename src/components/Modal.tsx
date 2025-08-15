@@ -20,7 +20,7 @@ const Modal = forwardRef(function Modal({ children }: ModalProps, ref) {
   return createPortal(
     <dialog
       ref={dialog}
-      className="p-4 w-1/4  rounded-md shadow-md backdrop:bg-stone-900/90 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      className="p-4 lg:w-1/4  rounded-md shadow-md backdrop:bg-stone-900/90 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
     >
       {children}
 

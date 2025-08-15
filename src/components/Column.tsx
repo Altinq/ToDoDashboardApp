@@ -22,7 +22,7 @@ const Column = ({
   });
 
   return (
-    <div className="flex w-1/3 flex-col p-6 bg-gray-100 rounded-2xl h-screen">
+    <div className="flex lg:w-1/3 flex-col p-6 w-full bg-gray-100 rounded-2xl lg:h-screen">
       <div className="flex flex-row justify-between mb-9 items-center">
         <h2 className=" font-bold text-lg">{column.title}</h2>
         <button

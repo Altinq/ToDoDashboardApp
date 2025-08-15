@@ -5,7 +5,7 @@ import Board from "./components/Board.tsx";
 
 function App() {
   return (
-    <div className="flex flex-row gap-8 ">
+    <div className="flex lg:flex-row flex-col lg:gap-8 ">
       <Navbar />
       <Board />
     </div>
